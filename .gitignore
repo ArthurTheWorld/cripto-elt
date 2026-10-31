@@ -1,0 +1,25 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+.pip-cache/
+
+# --- Airflow / dbt ---
+logs/
+dbt/target/
+dbt/dbt_packages/
+dbt/logs/
+dbt/profiles.yml.bak
+
+# --- Segredos ---
+.env
+
+# --- Editores / SO ---
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+dbt/.user.yml

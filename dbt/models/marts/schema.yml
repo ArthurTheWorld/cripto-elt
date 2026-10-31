@@ -1,0 +1,44 @@
+version: 2
+
+models:
+  - name: fct_mercado
+    description: >
+      Tabela fato incremental: estado de cada moeda em cada snapshot horário.
+      Grão = (ingested_at, moeda_id).
+    columns:
+      - name: ingested_at
+        description: "Chave do snapshot."
+        tests:
+          - not_null
+      - name: moeda_id
+        description: "Chave da moeda."
+        tests:
+          - not_null
+      - name: preco_usd
+        description: "Preço em USD."
+        tests:
+          - not_null
+      - name: market_cap_usd
+        description: "Valor de mercado em USD."
+        tests:
+          - not_null
+
+  - name: dim_moedas
+    description: "Dimensão com um registro por moeda (atributos mais recentes)."
+    columns:
+      - name: moeda_id
+        tests:
+          - not_null
+          - unique
+
+  - name: mart_ranking_mercado
+    description: "Ranking do snapshot mais recente com participação de mercado."
+    columns:
+      - name: moeda_id
+        tests:
+          - not_null
+          - unique
+      - name: posicao
+        tests:
+          - not_null
+          - unique

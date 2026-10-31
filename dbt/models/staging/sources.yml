@@ -1,0 +1,27 @@
+version: 2
+
+sources:
+  - name: raw
+    description: "Camada raw do warehouse: JSON cru carregado pelo Airflow."
+    schema: raw
+    tables:
+      - name: coingecko_mercado
+        description: "Um snapshot do top 100 de moedas por market cap, por hora."
+        loaded_at_field: loaded_at
+        freshness:
+          warn_after: { count: 6, period: hour }
+          error_after: { count: 24, period: hour }
+        columns:
+          - name: ingested_at
+            description: "Início do intervalo da DAG (chave de idempotência)."
+            tests:
+              - not_null
+              - unique
+          - name: payload
+            description: "Lista JSON de moedas como devolvida pela CoinGecko."
+            tests:
+              - not_null
+          - name: row_count
+            description: "Quantidade de moedas no snapshot."
+            tests:
+              - not_null

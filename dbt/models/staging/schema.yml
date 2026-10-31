@@ -1,0 +1,28 @@
+version: 2
+
+models:
+  - name: stg_coingecko__mercado
+    description: >
+      Uma linha por moeda por snapshot horário. Origem: raw.coingecko_mercado
+      (JSONB). A view não aplica regra de negócio, apenas explode e tipa.
+    columns:
+      - name: ingested_at
+        description: "Snapshot a que a linha pertence (início do intervalo da DAG)."
+        tests:
+          - not_null
+      - name: moeda_id
+        description: "Identificador da moeda na CoinGecko (ex.: bitcoin)."
+        tests:
+          - not_null
+      - name: simbolo
+        description: "Ticker em maiúsculas (ex.: BTC)."
+        tests:
+          - not_null
+      - name: preco_usd
+        description: "Preço em USD no momento do snapshot."
+        tests:
+          - not_null
+      - name: atualizado_em
+        description: "Timestamp de atualização informado pela própria API."
+        tests:
+          - not_null
